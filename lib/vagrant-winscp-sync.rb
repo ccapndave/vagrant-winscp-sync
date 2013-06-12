@@ -4,7 +4,7 @@ require "vagrant-winscp-sync/plugin"
 
 module VagrantPlugins
   module WinSCP
-    lib_path = Pathname.new(File.expand_path("../vagrant-winscp-sync", __FILE__))
+    #lib_path = Pathname.new(File.expand_path("../vagrant-winscp-sync", __FILE__))
     #autoload :Action, lib_path.join("action")
     #autoload :Errors, lib_path.join("errors")
 

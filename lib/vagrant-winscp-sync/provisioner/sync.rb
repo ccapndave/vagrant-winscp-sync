@@ -29,7 +29,7 @@ module VagrantPlugins
         #
         # No return value is expected.
         def configure(root_config)
-          @machine.ui.info "Configure"
+
         end
 
         # This is the method called when the actual provisioning should be
@@ -38,12 +38,10 @@ module VagrantPlugins
         #
         # No return value is expected.
         def provision
-          @machine.ui.info "Provision"
-
-          session = "platypus_vagrant"
-          local_dir = "D:/Projects/Playpearls/vagrant-winscp-sync/"
-          remote_dir = "/home/vagrant/platypus"
-          file_mask = "|.git/;.vagrant/;.idea/;*/app/cache/;*/app/logs/;*/chef/"
+          session = @config.session
+          local_dir = @config.local_dir
+          remote_dir = @config.remote_dir
+          file_mask = @config.file_mask
 
           open_command = "open \"\"#{session}\"\""
           sync_command = "synchronize remote \"\"#{local_dir}\"\" \"\"#{remote_dir}\"\" -filemask=\"\"#{file_mask}\"\" "
@@ -52,7 +50,6 @@ module VagrantPlugins
 
           u2d_command = "keepuptodate \"\"#{local_dir}\"\" \"\"#{remote_dir}\"\" -filemask=\"\"#{file_mask}\"\" "
           Process.spawn "\"C:\\Program Files (x86)\\WinSCP\\winscp.com\" /console /command \"#{open_command}\" \"#{u2d_command}\" "
-
         end
 
         def run_cmd(cmd)

@@ -53,7 +53,9 @@ Vagrant.configure("2") do |config|
   # path, and data_bags path (all relative to this Vagrantfile), and adding
   # some recipes and/or roles.
   config.vm.provision :winscp_sync do |winscp|
-
+    winscp.session = "platypus_vagrant"
+    winscp.remote_dir = "/home/vagrant/platypus"
+    winscp.file_mask = "|.git/;.vagrant/;.idea/;*/app/cache/;*/app/logs/;*/chef/"
   end
 
 end

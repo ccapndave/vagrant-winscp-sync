@@ -13,6 +13,11 @@ module VagrantPlugins
     class Plugin < Vagrant.plugin("2")
       name "WinSCP"
 
+      config(:winscp_sync, :provisioner) do
+        require File.expand_path("../config/sync", __FILE__)
+        Config::Sync
+      end
+
       provisioner(:winscp_sync) do
         require File.expand_path("../provisioner/sync", __FILE__)
         Provisioner::Sync

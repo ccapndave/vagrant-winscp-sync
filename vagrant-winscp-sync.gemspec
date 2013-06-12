@@ -7,9 +7,9 @@ Gem::Specification.new do |spec|
   spec.name          = "vagrant-winscp-sync"
   spec.version       = VagrantPlugins::WinSCP::VERSION
   spec.authors       = ["Dave Keen"]
-  spec.email         = ["dev@ruffness.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.email         = []
+  spec.description   = %q{A Vagrant plugin for syncing files on Windows via WinSCP instead of shared folders}
+  spec.summary       = %q{A Vagrant plugin for syncing files on Windows via WinSCP instead of shared folders}
   spec.homepage      = ""
   spec.license       = "MIT"
 
