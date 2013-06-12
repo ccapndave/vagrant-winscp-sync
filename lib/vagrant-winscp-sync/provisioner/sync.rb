@@ -1,3 +1,5 @@
+require 'open3'
+
 module VagrantPlugins
   module WinSCP
     module Provisioner
@@ -37,6 +39,42 @@ module VagrantPlugins
         # No return value is expected.
         def provision
           @machine.ui.info "Provision"
+
+          session = "platypus_vagrant"
+          local_dir = "D:/Projects/Playpearls/vagrant-winscp-sync/"
+          remote_dir = "/home/vagrant/platypus"
+          file_mask = "|.git/;.vagrant/;.idea/;*/app/cache/;*/app/logs/;*/chef/"
+
+          open_command = "open \"\"#{session}\"\""
+          sync_command = "synchronize remote \"\"#{local_dir}\"\" \"\"#{remote_dir}\"\" -filemask=\"\"#{file_mask}\"\" "
+
+          run_cmd [ "\"C:\\Program Files (x86)\\WinSCP\\winscp.com\" /console /command \"#{open_command}\" \"#{sync_command}\" " ]
+
+          u2d_command = "keepuptodate \"\"#{local_dir}\"\" \"\"#{remote_dir}\"\" -filemask=\"\"#{file_mask}\"\" "
+          Process.spawn "\"C:\\Program Files (x86)\\WinSCP\\winscp.com\" /console /command \"#{open_command}\" \"#{u2d_command}\" "
+
+        end
+
+        def run_cmd(cmd)
+          @machine.ui.info "running: #{cmd.join ' '}"
+          Open3.popen3(*cmd) do |stdin, stdout, stderr, wait_thread|
+            stdin.close
+            readers = [stdout, stderr]
+            while not readers.empty?
+              rs, = IO.select(readers)
+              break if rs.empty?
+              rs.each do |r|
+                begin
+                  got = r.readpartial(1024)
+                  out = (r == stdout) ? $stdout : $stderr
+                  out.print got
+                rescue EOFError
+                  readers.delete_if { |s| r == s }
+                end
+              end
+            end
+            wait_thread.value.success?
+          end
         end
 
       end
