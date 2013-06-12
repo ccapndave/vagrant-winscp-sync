@@ -48,8 +48,8 @@ module VagrantPlugins
 
           run_cmd [ "\"C:\\Program Files (x86)\\WinSCP\\winscp.com\" /console /command \"#{open_command}\" \"#{sync_command}\" " ]
 
-          u2d_command = "keepuptodate \"\"#{local_dir}\"\" \"\"#{remote_dir}\"\" -filemask=\"\"#{file_mask}\"\" "
-          Process.spawn "\"C:\\Program Files (x86)\\WinSCP\\winscp.com\" /console /command \"#{open_command}\" \"#{u2d_command}\" "
+          #u2d_command = "keepuptodate \"\"#{local_dir}\"\" \"\"#{remote_dir}\"\" -filemask=\"\"#{file_mask}\"\" "
+          #Process.spawn "\"C:\\Program Files (x86)\\WinSCP\\winscp.com\" /console /command \"#{open_command}\" \"#{u2d_command}\" "
         end
 
         def run_cmd(cmd)
